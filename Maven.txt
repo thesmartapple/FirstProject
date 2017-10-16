@@ -1,0 +1,41 @@
+Maven comes with 3 built-in build life cycles:
+
+Clean - this phase involves cleaning of the project (for a fresh build & deployment)
+Default - this phase handles the complete deployment of the project
+Site - this phase handles the generating the java documentation of the project
+
+Build Lifecycle of clean phase:
+The command used to clean up the project and make it ready for the fresh compile and deployment is mvn post-clean. When this command is invoked,maven executes the below tasks by executing the below commands internally:
+mvn pre-clean
+mvn clean
+mvn post-clean
+On executing it cleans up the output directory (target folder) by deleting all the compiled files.
+
+Build Lifecycle of Default phase:
+validate
+generate-sources
+process-sources
+generate-sources
+process-resources
+compile
+process-classes
+generate-test-sources
+test-compile
+test
+prepare-package
+package
+pre-integration-test
+integration-test
+post-integration-test
+verify
+install
+deploy
+
+Build Lifecycle of Site phase:
+This phase provided by maven generates the detailed documentation of any java project.
+This project documentation has a dedicated phases involved as listed below:
+pre-site
+site
+post-site
+site-deploy
+The command used in maven to generate javadocs for a given project is 'mvn site'.When this command is invoked, maven calls 'Doxia' document generation and other report generating plugins.

@@ -1,0 +1,130 @@
+									HIBERNATE:
+									==========
+
+It is an ORM: Object Relational Mapping
+Mapping object to the db directly,unlike JDBC which is a technology.ORM is a framework
+
+Save() vs Persist():
+Save()-
+1.return type of save() is java.io.serializable.
+2.save() can be used inside or outside the transaction boundaries
+Persist()-
+1.Return type of persist() is void().
+2.persist() can be used only within transaction boundary
+
+get() vs load():
+get()-
+1.get() method always hits DB
+2.Returns null if object is not present
+3.It should be used if you are not sure about the existence of instance.
+4.It returns real object not proxy.
+5.get() gives less performance
+load()-
+1.load() method doesn't hit DB
+2.Throws ObjectNotFoundException if object is not found.
+3.It should be used if you are sure that instance exists.
+4.load() returns proxy object
+5.load() gives better performance
+
+update() method
+update() should be used if session doesn't contain an already persistent state with same id. It means update should be used inside the session only. After closing the session it will throw error.
+merge() method
+merge() should be used irrespective of the state of the session,we can make modifications any time.
+
+Hibernate requires a set of configuration settings related to database and other related parameters in a file called hibernate.properties, or as an XML file named hibernate.cfg.xml.This file is kept in the root directory of your application's classpath.
+
+JDBC vs Hibernate:
+1.jdbc is database specific. Hibernate is database independent.
+2.jdbc does not support caching.Hibernate supports caching:first level and second level caching
+3.jdbc queries need to be mapped to DB by developer.Hibernate is ORM and generates dialects during run time by hbm file.
+Dialect: DB queries are not common among various DB vendors like Oracle SQL etc.Using hibernate,we can interact with Oracle or SQL.It is a class provided in org.hibernate.dialect package.Generates the query as per the DB in use.
+4.JDBC does not support lazy loading,Hibernate supports it for better performance.
+5.User responsible for creating n closing the connections in JDBC but not in Hibernate.
+
+Caching mechanism in Hibernate: 2 types-First level caching,second level caching
+
+First level cache: AKA session cache,enabled by default.Session object is created on demand from session factory, and is lost wen session is closed.If we query the same session object again,it wil be loaded from session cache
+2.load entity can be removed using evict()
+3.whole session cache can be cleared using clear()
+Second level cache: created in SessionFactory scope.Available for all sessions created in that session factory.All session cache dies once the session factory is closed.Can be configured for expiry of cache,location to store cache
+2.When hibernate session loads an entity,it looks for first level cache.If its present,its returned.If not present,2nd level cache is looked for cache entity.
+3.If 2nd level cache has cache entity,it returns cache entity n stores the same in first level cache too.
+4.Wen request comes for same entity,it retrieves from 1st level instead of hitting 2nd level cache
+5.If entity is not found in both,then it hits the database and stores the entities in both 1st n 2nd level cache
+
+It maps: 
+Java objects > table
+properties > columns
+Object data > rows
+ORM is DB vendor independent
+
+What are core objects/interfaces in Hibernate?
+Configuration,SessionFactory,Session,Transaction,Transaction Factory,Connection Provider
+
+SessionFactory:
+1.It provides the instance of Session. It is a factory of Session. It holds the data of second level cache that is not enabled by default.
+2.SessionFactory is thread-safe
+
+Session:
+1.It maintains a connection between hibernate application and database.
+2.It provides methods to store, update, delete or fetch data from the database such as persist(), update(), delete(), load(), get() etc.
+3.It is a factory of Query, Criteria and Transaction i.e. it provides factory methods to return these instances.
+4.Session is not a thread-safe
+
+Internal APIs used by Hibernate:
+JNDI,JTA,JDBC
+
+What is Lazy loading?
+Lazy loading is a design pattern.It loads the child objects on demand while loading the Parent Object.Since Hibernate 3,lazy loading is enabled by default which is true for the child objects.lazy = true (means not to load child)
+This make sure that the child objects are not loaded unless they are explicitly invoked in the application by calling getChild() method on parent.Hibernate issues a fresh database call to load the child when getChild() is called on the Parent object.
+If we need to load the child objects when parent is loaded,make lazy=false and hibernate will load the child when parent is loaded from the database
+
+How to make a immutable class in hibernate?
+Mark a class as mutable="false",class will be treated as an immutable class.Mutable="true" by default
+
+There are 3 ways of inheritance mapping in hibernate.
+Table per hierarchy
+Table per concrete class
+Table per subclass
+
+There are 3 states of object (instance) in hibernate.
+Transient: The object is in transient state if it is just created but has no primary key (identifier) and not associated with session.
+Persistent: The object is in persistent state if session is open, and you just saved the instance in the database or retrieved the instance from the database.
+Detached: The object is in detached state if session is closed. After detached state, object comes to persistent state if you call lock() or update() method.
+
+4 types of association mapping in hibernate.
+One to Many
+Many to Many
+One to One
+Many to One
+
+Collection mapping can only be performed with
+One-to-Many
+Many-to-Many
+but not One-to-One and Many-to-One
+
+HQL: Hibernate Query Language is known as an object oriented query language. It is like structured query language (SQL).
+Advantages of HQL over SQL:
+You don't need to learn SQL
+Database independent
+Simple to write query
+
+What is SessionFactory?
+SessionFactory provides the instance of Session. It is a factory of Session. It holds the data of second level cache that is not enabled by default.
+
+What is Session?
+It maintains a connection between hibernate application and database.
+It provides methods to store, update, delete or fetch data from the database such as persist(), update(), delete(), load(), get() etc.
+It is a factory of Query, Criteria and Transaction i.e. it provides factory methods to return these instances
+
+Is SessionFactory a thread-safe object?
+Yes, SessionFactory is a thread-safe object, many threads cannot access it simultaneously
+
+Is Session a thread-safe object?
+No, Session is not a thread-safe object, many threads can access it simultaneously. In other words, you can share it between threads.
+
+What are the states of object in hibernate?
+Transient: The object is in transient state if it is just created but has no primary key (identifier) and not associated with session.
+Persistent: The object is in persistent state if session is open, and you just saved the instance in the database or retrieved the instance from the database.
+Detached: The object is in detached state if session is closed. After detached state, object comes to persistent state if you call lock() or update() method.
+

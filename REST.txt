@@ -1,0 +1,141 @@
+What are webservices?
+A web service is a collection of open protocols and standards used for exchanging data between applications or systems. Software applications written in various programming languages and running on various platforms can use web services to exchange data over computer networks like the Internet
+
+controller layer
+service layer
+Entity layer
+repository layer
+
+4 Ways to Secure RESTful Web Services:
+-BASIC Authentication
+-DIGEST Authentication:makes use of a hashing algorithms to encrypt the password (called password hash) entered by the user before sending it to the server.There are many hashing algorithms for password security such as MD5, SHA, BCrypt, SCrypt and PBKDF2WithHmacSHA1 algorithms.Once password hash is generated and stored in database, it can not be converted back to original password.Each time user logins into application,new password hash is regenerated again,and match with hash stored in database.
+-CLIENT CERT Authentication
+-Using API Keys
+
+Few IMP annotations:
+@PathParam
+@QueryParam
+@MatrixParam
+@Header
+@CookieParam
+@XmlRootElement
+@XmlTransient
+@Context
+
+Methods to secure RESTful APIs:
+Using SecurityContext- javax.ws.rs.core.SecurityContext interface provides access to security-related information for a request 
+Using Annotations for Method level Authorization:This technique is used to verify roles and responsibities of an authenticated used – for any certain operation.JAX-RS provides below annotations for this purpose.
+@PermitAll
+@DenyAll
+@RolesAllowed
+
+REST APIs are designed using Jersey library by implementing JAX-RS interface API,which has annotations and interfaces. Jersey is a library which provides classes to implement the interfaces and functionality.
+
+JAX-RS stands for JAVA API for RESTful Web Services. JAX-RS is a JAVA based programming language API and specification to provide support for creating RESTful Webservices
+
+Points while designing security for your RESTful web services:
+1.Use only HTTPS protocol so that your whole communocation is always encrypted.
+2.Never send auth credentials or API keys as query param. They appear in URL and can be logged or tracked easily.
+3.Use hardest encryption level always.
+4.For resources exposed by RESTful web services, it’s important to make sure any PUT, POST, and DELETE request is protected from Cross Site Request Forgery.
+5.Always validate the input data asap it is received in server method. Use only primitive data as input parameter as much as possible.
+6.Rely on framework provided validation features as they are tested by large community already.
+
+REST architecture treats every content as a resource. These resources can be text files, html pages, images, videos or dynamic business data. REST Server simply provides access to resources and REST client accesses and modifies the resources. Here each resource is identified by URIs/ global IDs.
+
+In REST architecture, a REST Server simply provides access to resources and REST client accesses and presents the resources. Here each resource is identified by URIs.REST uses various representations to represent a resource like text, JSON and XML.
+
+Some of the commonly used HTTP methods used in REST based architecture:
+GET - Provides a read only access to a resource
+PUT - Used to create a new resource
+DELETE - Used to remove a resource
+POST - Used to update a existing resource or create a new resource
+
+Core components of a HTTP Request:
+Verb - Indicate HTTP methods such as GET, POST, DELETE, PUT etc.
+URI - Uniform Resource Identifier (URI) to identify the resource on server.
+HTTP Version - Indicate HTTP version, for example HTTP v1.1 .
+Request Header - Contains metadata for the HTTP Request message as key-value pairs. For example, client ( or browser) type, format supported by client, format of message body,cache settings etc.
+Request Body - Message content or Resource representation.
+
+Core components of a HTTP response:
+Status/Response Code - Indicate Server status for the requested resource. For example 404 means resource not found and 200 means response is ok.
+HTTP Version - Indicate HTTP version, for example HTTP v1.1 .
+Response Header - Contains metadata for the HTTP Response message as key-value pairs. For example, content length, content type, response date, server type etc.
+Response Body - Response message content or Resource representation.
+
+PUT and DELETE operations are idempotent.It means their result will always be same no matter how many times these operations are invoked.
+
+Request parameters in a JAX-RS can be accessed in 3 ways:
+Using @QueryParam,@MatrixParam,@CookieParam etc
+Using @Context annotation which is specific for classes like UriInfo and HttpHeaders
+Using @BeanParam,but creating a class with all the parameters and passing the @BeanParam annotation as arguement.
+
+Explain The Factors To Decide About The Style Of Web Service To Use,SOAP Or REST?
+Using REST based web service is preferred due to its simplicity, performance, scalability, and support for multiple data formats.However,SOAP is favorable to use where service requires an advanced level of security and transactional reliability.
+1. Does the service expose data or business logic? To expose data REST will be a better choice and SOAP for logic.
+2. If the consumer or the service providers require a formal contract, then SOAP can provide such a contract via WSDL.
+3. REST supports multiple data formats ie.,JSON,XML and custom data types.
+4. Support for AJAX calls. REST can use the XMLHttpRequest. 
+5. SOAP enables both synchronous/asynchronous operations whereas REST has built-in support for synchronous operations.
+6. Stateless or Stateful calls -REST is suited for stateless operations.
+Here are some of the advanced-level facts that you can consider as well.
+1. Security requirement – SOAP provides a high level of security.
+2. Transaction support – SOAP has good support for transaction management.
+3. Limited bandwidth – SOAP has a lot of overhead when sending/receiving packets since it’s XML based, requires a SOAP header. However, REST requires less bandwidth to send requests to the server. Its messages are mostly built using JSON.
+4. Ease of use – It is easy to implement, test, and maintain REST based application.
+
+Secure your RESTful Web services using one of the following methods to support authentication, authorization, or encryption:
+Updating the web.xml deployment descriptor to define security configuration.
+Using the javax.ws.rs.core.SecurityContext interface to implement security programmatically
+Using Jersey OAuth libraries to sign and verify requests
+
+To secure your RESTful Web service using basic authentication, perform the following steps:
+1.Define a <security-constraint> for each set of RESTful resources (URIs) that you plan to protect.
+2.Use the <login-config> element to define the type of authentication you want to use and the security realm to which the security constraints will be applied.
+3.Define one or more security roles using the <security-role> tag and map them to the security constraints defined in step 1
+4.To enable encryption, add the <user-data-constraint> element and set the <transport-guarantee> subelement to CONFIDENTIAL.
+
+2 types of resource lifecycles: Singleton scoped and RequestScoped
+
+All REST resources are Request scopped by default unless specified otherwise. So a new instance is created every time a request to the REST API is made. Annotate the class with @Singleton to change this default behaviour
+
+Singleton instance is created before the Request instance is created,and hence the PathParam and QueryParam variables fail to load in Singleton REST API.
+Singleton resources are instantiated during app startup,so it cant be injected into a request specific information which has the member variables
+
+MessageBodyReader:reads the raw content from client wich is in JSON/XML format and converts into String or any primitive data type or even custom data type
+MessageBodyWriter:writes the content in the response after converting the string or any primitive data type or even custom data type to JSON/XML
+ParamConverter:takes in the data type of the parameter that is passed by way of PathParam,QueryParam and converts it into the suitable message body like JSON,XML,plain text
+
+The way of chaining the method calls is called Fluent API
+
+Methods of authentication: Basic Auth,Digest Access Authentication, Asymmetric cryptography,OAuth 1 & 2,JSON web tokens
+
+Basic Auth:
+Client side: Header of a request contains the credentials. username:password separated by :,and that resultant string is Base64 encoded. New header key is created called Authorization with the value is Basic: ,and the Base64 encoded string.This is sent in the request from client for authorization
+Server side: server examines the header and finds Basic: which means the header has basic authentication. Base64 decoding happens to fetch the username:password
+Pros: simple implementation,stateless server,supported by all browsers
+Cons: requires HTTPS,subject to replay attacks
+
+Interceptors used to manipulate entities (input n output streams)
+Filters manipulate request and response params (header or metadata information)
+
+Differences between interceptors and Filters:
+
+ContainerRequestFilter
+ContainerResponseFilter
+ReaderInterceptor: request body
+WriterInterceptor: response body
+
+Client Side:
+Filters are ClientRequestFilter,ClientResponseFilter
+Interceptors are ReaderInterceptor,WriterInterceptor
+
+=======================================================================================================================================================================
+
+SOAP has service definition called WSDL,and REST has none.
+
+What is JAX-RS,it is the common API to implement REST
+What is Jersey,it is a library of REST which implements the JAX-RS interfaces and annotations
+
+Archetype is a template to select a specific type of project
