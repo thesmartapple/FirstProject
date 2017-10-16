@@ -1,0 +1,19 @@
+JAXB stands for Java Architecture for XML Binding. It provides mechanism to marshal (write) java objects into XML and unmarshal (read) XML into object. Simply, you can say it is used to convert java object into xml and vice-versa.
+
+JAXB 2.0 includes several features as follows:
+1) Annotation support: JAXB 2.0 provides support to annotation so less coding is required to develop JAXB application. The javax.xml.bind.annotation package provides classes and interfaces for JAXB 2.0.
+2) Support for all W3C XML Schema features: it supports all the W3C schema unlike JAXB 1.0.
+3) Additional Validation Capabilities: it provides additional validation support by JAXP 1.3 validation API.
+4) Small Runtime Library: it required small runtime library
+5) Reduction of generated schema-derived classes: it reduces a lot of generated schema-derived classes.
+
+Steps to convert java object into XML doc:
+Create POJO or bind the schema and generate the classes
+Create the JAXBContext object
+Create the Marshaller objects
+Create the content tree by using set methods
+Call the marshal method
+
+@XmlRootElement specifies the root element for the xml document.
+@XmlAttribute specifies the attribute for the root element.
+@XmlElement specifies the sub element for the root element.
